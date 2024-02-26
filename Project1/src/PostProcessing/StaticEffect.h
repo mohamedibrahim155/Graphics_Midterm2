@@ -18,5 +18,14 @@ public:
 	FrameBuffer* staticEffectBuffer;
 
 	BaseTexture* staticTexture;
+
+private:
+	bool isActive = false;
+
+	float timer = 0;
+	float interval = 2;
+
+	void OnActiveState();
+	void RunTimer();
 };
 

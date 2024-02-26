@@ -1,4 +1,9 @@
 #include "StaticEffect.h"
+#include "../Time.h"
+#include "../Math.h"
+
+using namespace MathUtils;
+
 
 StaticEffect::StaticEffect()
 {
@@ -37,18 +42,9 @@ void StaticEffect::SetShaderUniforms()
 
 	shader->setInt("sceneTexture", 0);  // Scene texture from framebuffer
 	shader->setFloat("time", time);
+	shader->setFloat("isEffectActive", isActive);
 
-	//staticTexture->SetTextureSlot(1);
-	//shader->setInt("staticTexture", 1);
-	//staticTexture->Bind();
-
-	
-	//GLCALL(glBindTexture(GL_TEXTURE_2D, frameBuffer->GetColorAttachmentID()));
-	
-
-	//SetShaderUniforms();
-
-	
+	RunTimer();
 }
 
 void StaticEffect::DrawProperties()
@@ -62,7 +58,7 @@ void StaticEffect::DrawProperties()
 			return;
 		}
 
-		//ImGui::Checkbox("IsFlickering", &isFlicker);
+		ImGui::Checkbox("Is Active", &isActive);
 
 		ImGui::TreePop();
 	}
@@ -70,4 +66,26 @@ void StaticEffect::DrawProperties()
 
 void StaticEffect::SceneDraw()
 {
+}
+
+void StaticEffect::OnActiveState()
+{
+	isActive = !isActive;
+	interval = Math::GetRandomIntNumber(2, 7);
+
+
+}
+
+void StaticEffect::RunTimer()
+{
+
+	if (timer >= interval)
+	{
+		timer = 0;
+		OnActiveState();
+	}
+	else
+	{
+		timer += Time::GetInstance().deltaTime;
+	}
 }

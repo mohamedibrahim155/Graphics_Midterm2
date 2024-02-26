@@ -292,39 +292,46 @@ void ApplicationRenderer::Start()
      directionLight->SetInnerAndOuterCutoffAngle(20, 25);
 
      directionLight->transform.SetPosition(glm::vec3(-2.30f, 2.20f, 3));
-    
-     std::string scifiTexturePath = "Models/Spacestation/SciFi.jpg";
-     std::string scifi2TexturePath = "Models/Spacestation/SciFi2.jpg";
-     std::string scifi3TexturePath = "Models/Spacestation/SciFi3.jpg";
-
-     std::string codeTexurePath = "Models/Spacestation/ComputerCode.jpg";
-     std::string codeTexurePath2 = "Models/Spacestation/ComputerCode2.jpg";
-
-     Texture* sciFiTexture = new Texture(scifiTexturePath);
-     Texture* sciFiTexture2 = new Texture(scifi2TexturePath);
-     Texture* sciFiTexture3 = new Texture(scifi3TexturePath);
-
-     Texture* codeTexture = new Texture(codeTexurePath);
-     Texture* codeTexture2 = new Texture(codeTexurePath2);
+ 
 
 
-     RenderQuad* quadWithTexture = new RenderQuad();
-     //Model* quadWithTexture = new Model("Models/DefaultQuad/DefaultQuad.fbx");
-     quadWithTexture->transform.SetPosition(glm::vec3(10, 0, 0));
-     quadWithTexture->SetTexture(sciFiTexture);
-     quadWithTexture->SetChangeTextures({ sciFiTexture,sciFiTexture2, sciFiTexture3 });
+     Light* pointLight = new Light();
+     pointLight->Initialize(LightType::POINT_LIGHT, 1);
+     pointLight->SetAmbientColor(glm::vec4(1, 1, 1, 1.0f));
+     //directionLight->SetAmbientColor(glm::vec4(15, 15, 15, 1.0f));
+   //  directionLight->SetAmbientColor(glm::vec4(0.4f, 0.4f, 0.4f, 1.0f));
+     pointLight->SetIntensity(0.75f);
+     pointLight->SetColor(glm::vec4(1, 1, 1, 1.0f));
+     pointLight->SetAttenuation(1, 1, 0.01f);
+     pointLight->SetInnerAndOuterCutoffAngle(20, 25);
+
+     pointLight->transform.SetPosition(glm::vec3(0, 0.60f, 28.90f));
 
 
-     //GraphicsRender::GetInstance().AddModelAndShader(quadWithTexture, defaultShader);
+     Light* pointLight2 = new Light();
+     pointLight2->Initialize(LightType::POINT_LIGHT, 1);
+     pointLight2->SetAmbientColor(glm::vec4(1, 1, 1, 1.0f));
+     //directionLight->SetAmbientColor(glm::vec4(15, 15, 15, 1.0f));
+   //  directionLight->SetAmbientColor(glm::vec4(0.4f, 0.4f, 0.4f, 1.0f));
+     pointLight2->SetIntensity(0.75f);
+     pointLight2->SetColor(glm::vec4(1, 1, 1, 1.0f));
+     pointLight2->SetAttenuation(1, 1, 0.01f);
+     pointLight2->SetInnerAndOuterCutoffAngle(20, 25);
 
-    RenderQuad* quadWithTexture2 = new RenderQuad();
-   // Model* quadWithTexture2 = new Model("Models/DefaultQuad/DefaultQuad.fbx");
-    quadWithTexture2->transform.SetPosition(glm::vec3(20, 0, 0));
-    quadWithTexture2->SetTexture(codeTexture);
-    quadWithTexture2->SetChangeTextures({ codeTexture, codeTexture2 });
+     pointLight2->transform.SetPosition(glm::vec3(21.20f, 3.00f, 37.90f));
 
-   //  GraphicsRender::GetInstance().AddModelAndShader(quadWithTexture2, defaultShader);
 
+     Light* pointLight3 = new Light();
+     pointLight3->Initialize(LightType::POINT_LIGHT, 1);
+     pointLight3->SetAmbientColor(glm::vec4(1, 1, 1, 1.0f));
+     //directionLight->SetAmbientColor(glm::vec4(15, 15, 15, 1.0f));
+   //  directionLight->SetAmbientColor(glm::vec4(0.4f, 0.4f, 0.4f, 1.0f));
+     pointLight3->SetIntensity(0.75f);
+     pointLight3->SetColor(glm::vec4(1, 1, 1, 1.0f));
+     pointLight3->SetAttenuation(1, 1, 0.01f);
+     pointLight3->SetInnerAndOuterCutoffAngle(20, 25);
+               
+     pointLight3->transform.SetPosition(glm::vec3(-21.0f, 2.10f, 44.90f));
 
      GameScene();
      AsteroidScene();
@@ -333,6 +340,46 @@ void ApplicationRenderer::Start()
 
 void ApplicationRenderer::GameScene()
 {
+
+
+    std::string scifiTexturePath = "Models/Spacestation/SciFi.jpg";
+    std::string scifi2TexturePath = "Models/Spacestation/SciFi2.jpg";
+    std::string scifi3TexturePath = "Models/Spacestation/SciFi3.jpg";
+    std::string scifi4TexturePath = "Models/Spacestation/SciFi4.jpg";
+
+    std::string codeTexurePath = "Models/Spacestation/ComputerCode.jpg";
+    std::string codeTexurePath2 = "Models/Spacestation/ComputerCode2.jpg";
+    std::string codeTexurePath3 = "Models/Spacestation/ComputerCode3.jpg";
+    std::string codeTexurePath4 = "Models/Spacestation/ComputerCode4.jpg";
+
+    Texture* sciFiTexture = new Texture(scifiTexturePath);
+    Texture* sciFiTexture2 = new Texture(scifi2TexturePath);
+    Texture* sciFiTexture3 = new Texture(scifi3TexturePath);
+    Texture* sciFiTexture4 = new Texture(scifi4TexturePath);
+
+    Texture* codeTexture = new Texture(codeTexurePath);
+    Texture* codeTexture2 = new Texture(codeTexurePath2);
+    Texture* codeTexture3 = new Texture(codeTexurePath3);
+    Texture* codeTexture4 = new Texture(codeTexurePath4);
+
+
+    RenderQuad* quadWithTexture = new RenderQuad();
+    //Model* quadWithTexture = new Model("Models/DefaultQuad/DefaultQuad.fbx");
+    quadWithTexture->transform.SetPosition(glm::vec3(10, 0, 0));
+    quadWithTexture->SetTexture(sciFiTexture);
+    quadWithTexture->SetChangeTextures({ sciFiTexture,sciFiTexture2, sciFiTexture3,sciFiTexture4 });
+
+
+    //GraphicsRender::GetInstance().AddModelAndShader(quadWithTexture, defaultShader);
+
+    RenderQuad* quadWithTexture2 = new RenderQuad();
+    // Model* quadWithTexture2 = new Model("Models/DefaultQuad/DefaultQuad.fbx");
+    quadWithTexture2->transform.SetPosition(glm::vec3(20, 0, 0));
+    quadWithTexture2->SetTexture(codeTexture);
+    quadWithTexture2->SetChangeTextures({ codeTexture, codeTexture2,codeTexture3,codeTexture4 });
+
+    //  GraphicsRender::GetInstance().AddModelAndShader(quadWithTexture2, defaultShader);
+
     std::string diffuseTextureFile = "Models/Spacestation/SpaceInteriors_Texture.png";
 
     std::string UVMapperTextureFile = "Models/Spacestation/uv_mapper.png";
@@ -851,7 +898,9 @@ void ApplicationRenderer::ProcessInput(GLFWwindow* window)
 
 
          }
-     
+
+         if (!isPlayMode) return;
+
          if (action == GLFW_PRESS)
          {
              InputManager::GetInstance().OnKeyPressed(key);
