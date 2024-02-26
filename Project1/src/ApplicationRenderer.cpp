@@ -332,6 +332,12 @@ void ApplicationRenderer::Start()
                
      pointLight3->transform.SetPosition(glm::vec3(-21.0f, 2.10f, 44.90f));
 
+     directionLight->isVisible = false;
+     pointLight->isVisible = false;
+     pointLight2->isVisible = false;
+     pointLight3->isVisible = false;
+
+
      GameScene();
      AsteroidScene();
 
