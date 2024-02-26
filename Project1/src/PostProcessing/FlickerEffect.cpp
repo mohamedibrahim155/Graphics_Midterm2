@@ -44,9 +44,7 @@ void FlickerEffect::SetShaderUniforms()
 	shader->setInt("sceneTexture", 0);  // Scene texture from framebuffer
 	shader->setFloat("time", time);
 	shader->setBool("isFlicker", isFlicker);
-	shader->setInt("randomNumber", Math::GetRandomIntNumber(100,2000));
-	shader->setFloat("yRange", uvY);
-
+	shader->setInt("randomNumber", randomSide);
 
 	OnTimerUpdate();
 }
@@ -76,7 +74,8 @@ void FlickerEffect::OnStateChange()
 {
 	isFlicker = !isFlicker;
 
-	timeInterval = Math::GetRandomFloatNumber(1, 2);
+	timeInterval = Math::GetRandomFloatNumber(0.1f, 1);
+	randomSide = Math::GetRandomIntNumber(-1, 1);
 
 	
 }
@@ -93,16 +92,6 @@ void FlickerEffect::OnTimerUpdate()
 	else
 	{
 		timer += Time::GetInstance().deltaTime;
-
-
-		if (uvY<=0)
-		{
-			uvY = 0;
-		}
-		else
-		{
-			uvY += Time::GetInstance().deltaTime * 0.01f;
-		}
 		
 	}
 }

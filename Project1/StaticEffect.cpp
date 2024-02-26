@@ -1,1 +1,0 @@
-#include "StaticEffect.h"

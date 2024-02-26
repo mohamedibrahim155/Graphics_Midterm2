@@ -29,6 +29,7 @@ private:
 	float timeInterval = 2;
 	float uvY = 0.7f;
 
+	int randomSide = 0;
 	void OnStateChange();
 	void OnTimerUpdate();
 };

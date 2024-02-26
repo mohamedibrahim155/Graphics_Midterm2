@@ -3,6 +3,7 @@
 #include "ChromaticEffect.h"
 #include "PixelizationEffect.h"
 #include "FlickerEffect.h"
+#include "StaticEffect.h"
 class PostProcessing : public Object
 {
 public:
@@ -31,6 +32,7 @@ private:
 	ChromaticEffect* chromatic;
 	PixelizationEffect* pixelization;
 	FlickerEffect* flicker;
+	StaticEffect* staticEffect;
 
 	Shader* finalShader;
 	

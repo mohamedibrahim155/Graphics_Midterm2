@@ -210,7 +210,7 @@
     <ClCompile Include="src\PostProcessing\FlickerEffect.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="StaticEffect.cpp">
+    <ClCompile Include="src\PostProcessing\StaticEffect.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -428,7 +428,7 @@
     <ClInclude Include="src\PostProcessing\FlickerEffect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="StaticEffect.h">
+    <ClInclude Include="src\PostProcessing\StaticEffect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -463,5 +463,7 @@
     <None Include="Shaders\RenderTexture.vert" />
     <None Include="Shaders\PostProcessing\Flicker.vert" />
     <None Include="Shaders\PostProcessing\Flicker.frag" />
+    <None Include="Shaders\PostProcessing\Static.vert" />
+    <None Include="Shaders\PostProcessing\Static.frag" />
   </ItemGroup>
 </Project>

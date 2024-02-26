@@ -13,7 +13,9 @@ uniform int randomNumber;
 uniform float yRange;
 
 
-
+float speed = 0.1; 
+float frequency = 0.5; 
+float amplitude = 0.2;
 
 float lerp(float a, float b, float t) 
 {
@@ -21,18 +23,20 @@ float lerp(float a, float b, float t)
 }
 void main() 
 {
-    vec2 sampledUv = uv;
+  
 
-   
-    float flickerAmplitude = 0.2;
-    float flickerOffset = 0.5;
-    float flicker = sin(time) * flickerAmplitude + flickerOffset;
 
+      float flicker = amplitude * sin(2.0 * 3.14159 * frequency * time) + speed * time;
+
+      if(randomNumber<=0)
+      {
+       flicker*=-1;
+      }
    
-    sampledUv.y += flicker;
+     vec2 sampledUv = vec2(uv.x, uv.y + flicker);
 
  
-    sampledUv.y = mod(sampledUv.y, 1.0);
+   
 
  
     vec4 screenColor = texture(sceneTexture, isFlicker ? sampledUv : uv);
@@ -40,14 +44,3 @@ void main()
     FragColor = screenColor;
 }
 
-//void mainImage( out vec4 fragColor, in vec2 fragCoord )
-//{
-//    float t = iTime;
-//    t *= UPDATE_RATE;
-//    t -= fract(t);
-//    t /= UPDATE_RATE;
-//    float intensity = (MINIMUM_LIGHT_INTENSITY + (MAXIMUM_LIGHT_INTENSITY + (sin(t) * MAXIMUM_LIGHT_INTENSITY)));
-//    intensity += LIGHT_INTENSITY_RANDOMNESS + (hash11(t) * 2.0) - 1.0;
-//    intensity /= MAXIMUM_LIGHT;
-//	fragColor = vec4( color* intensity,1.0);
-//}

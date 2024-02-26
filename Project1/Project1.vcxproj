@@ -204,7 +204,7 @@
     <ClCompile Include="src\UnLitMaterial.cpp" />
     <ClCompile Include="src\ImGui\WindowDockingPanel.cpp" />
     <ClCompile Include="src\ImGui\ToolPanel.cpp" />
-    <ClCompile Include="StaticEffect.cpp" />
+    <ClCompile Include="src\PostProcessing\StaticEffect.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\stb_image.h" />
@@ -278,7 +278,7 @@
     <ClInclude Include="src\UnLitMaterial.h" />
     <ClInclude Include="src\ImGui\WindowDockingPanel.h" />
     <ClInclude Include="src\ImGui\ToolPanel.h" />
-    <ClInclude Include="StaticEffect.h" />
+    <ClInclude Include="src\PostProcessing\StaticEffect.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\AlphaBlendCombined.frag" />
@@ -298,6 +298,8 @@
     <None Include="Shaders\PostProcessing\Flicker.vert" />
     <None Include="Shaders\PostProcessing\Pixelization.frag" />
     <None Include="Shaders\PostProcessing\Pixelization.vert" />
+    <None Include="Shaders\PostProcessing\Static.frag" />
+    <None Include="Shaders\PostProcessing\Static.vert" />
     <None Include="Shaders\RenderTexture.frag" />
     <None Include="Shaders\RenderTexture.vert" />
     <None Include="Shaders\ScrollTexture.frag" />
