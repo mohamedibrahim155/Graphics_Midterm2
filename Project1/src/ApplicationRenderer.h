@@ -28,7 +28,7 @@
 #include "CameraManager.h"
 #include "Asteroid/Asteroid.h"
 #include "ComputerScreen//ComputerScreen.h"
-
+#include "ComputerScreen/RenderQuad.h"
 class ApplicationRenderer
 {
 public:

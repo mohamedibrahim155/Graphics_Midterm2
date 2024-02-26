@@ -213,6 +213,9 @@
     <ClCompile Include="src\PostProcessing\StaticEffect.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\ComputerScreen\RenderQuad.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Shader.h">
@@ -429,6 +432,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\PostProcessing\StaticEffect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ComputerScreen\RenderQuad.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -261,9 +261,19 @@ void ApplicationRenderer::Start()
     gameScenecamera->postprocessing->InitializePostProcessing();
 
     monitorRenderTexureCamera->postprocessing->InitializePostProcessing();
+    monitorRenderTexureCamera->isPostprocessing = true;
+    monitorRenderTexureCamera->postprocessing->pixelization->isEnabled = true;
+    monitorRenderTexureCamera->postprocessing->chromatic->isEnabled = false;
+    monitorRenderTexureCamera->postprocessing->flicker->isEnabled = true;
+    monitorRenderTexureCamera->postprocessing->staticEffect->isEnabled = true;
 
     monitorRenderTexureCamera2->postprocessing->InitializePostProcessing();
 
+    monitorRenderTexureCamera2->isPostprocessing = true;
+    monitorRenderTexureCamera2->postprocessing->pixelization->isEnabled = true;
+    monitorRenderTexureCamera2->postprocessing->chromatic->isEnabled = false;
+    monitorRenderTexureCamera2->postprocessing->flicker->isEnabled = true;
+    monitorRenderTexureCamera2->postprocessing->staticEffect->isEnabled = true;
   
 
      Model* directionLightModel = new Model("Models/DefaultSphere/Sphere_1_unit_Radius.ply",false, true);
@@ -284,20 +294,36 @@ void ApplicationRenderer::Start()
      directionLight->transform.SetPosition(glm::vec3(-2.30f, 2.20f, 3));
     
      std::string scifiTexturePath = "Models/Spacestation/SciFi.jpg";
+     std::string scifi2TexturePath = "Models/Spacestation/SciFi2.jpg";
+     std::string scifi3TexturePath = "Models/Spacestation/SciFi3.jpg";
+
      std::string codeTexurePath = "Models/Spacestation/ComputerCode.jpg";
+     std::string codeTexurePath2 = "Models/Spacestation/ComputerCode2.jpg";
 
      Texture* sciFiTexture = new Texture(scifiTexturePath);
+     Texture* sciFiTexture2 = new Texture(scifi2TexturePath);
+     Texture* sciFiTexture3 = new Texture(scifi3TexturePath);
+
      Texture* codeTexture = new Texture(codeTexurePath);
+     Texture* codeTexture2 = new Texture(codeTexurePath2);
 
-     Model* quadWithTexture = new Model("Models/DefaultQuad/DefaultQuad.fbx");
+
+     RenderQuad* quadWithTexture = new RenderQuad();
+     //Model* quadWithTexture = new Model("Models/DefaultQuad/DefaultQuad.fbx");
      quadWithTexture->transform.SetPosition(glm::vec3(10, 0, 0));
-     quadWithTexture->meshes[0]->meshMaterial->material()->diffuseTexture = sciFiTexture;
-     GraphicsRender::GetInstance().AddModelAndShader(quadWithTexture, defaultShader);
+     quadWithTexture->SetTexture(sciFiTexture);
+     quadWithTexture->SetChangeTextures({ sciFiTexture,sciFiTexture2, sciFiTexture3 });
 
-     Model* quadWithTexture2 = new Model("Models/DefaultQuad/DefaultQuad.fbx");
-     quadWithTexture2->transform.SetPosition(glm::vec3(20, 0, 0));
-     quadWithTexture2->meshes[0]->meshMaterial->material()->diffuseTexture = codeTexture;
-     GraphicsRender::GetInstance().AddModelAndShader(quadWithTexture2, defaultShader);
+
+     //GraphicsRender::GetInstance().AddModelAndShader(quadWithTexture, defaultShader);
+
+    RenderQuad* quadWithTexture2 = new RenderQuad();
+   // Model* quadWithTexture2 = new Model("Models/DefaultQuad/DefaultQuad.fbx");
+    quadWithTexture2->transform.SetPosition(glm::vec3(20, 0, 0));
+    quadWithTexture2->SetTexture(codeTexture);
+    quadWithTexture2->SetChangeTextures({ codeTexture, codeTexture2 });
+
+   //  GraphicsRender::GetInstance().AddModelAndShader(quadWithTexture2, defaultShader);
 
 
      GameScene();

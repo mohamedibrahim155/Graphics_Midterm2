@@ -25,14 +25,16 @@ public:
 
 	 void SceneDraw() override;
 
+	 PixelizationEffect* pixelization;
+	 FlickerEffect* flicker;
+	 StaticEffect* staticEffect;
+	 ChromaticEffect* chromatic;
 private:
 
 	std::vector<BaseEffect*> listOfeffects;
 
-	ChromaticEffect* chromatic;
-	PixelizationEffect* pixelization;
-	FlickerEffect* flicker;
-	StaticEffect* staticEffect;
+	
+	
 
 	Shader* finalShader;
 	
