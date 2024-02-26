@@ -23,6 +23,12 @@ ApplicationRenderer::ApplicationRenderer()
 
     renderTextureCamera5 = new Camera();
     renderTextureCamera5->name = "RenderTexture5 Camera";
+
+    monitorRenderTexureCamera = new Camera();
+    monitorRenderTexureCamera->name = "monitorRenderTexure Camera";
+    
+    monitorRenderTexureCamera2 = new Camera();
+    monitorRenderTexureCamera2->name = "monitorRenderTexure Camera2";
 }
 
 ApplicationRenderer::~ApplicationRenderer()
@@ -175,6 +181,16 @@ void ApplicationRenderer::WindowInitialize(int width, int height,  std::string w
     renderTextureCamera5->transform.position = glm::vec3(-25.66f, 9.41f, 35.00f);
     renderTextureCamera5->transform.SetRotation(glm::vec3(-16.30f, 128.40f, 0.00));
     renderTextureCamera5->IntializeRenderTexture(specification);
+
+    monitorRenderTexureCamera->InitializeCamera(CameraType::PERSPECTIVE, 45.0f, 0.1f, 1000.0f);
+    monitorRenderTexureCamera->transform.position = glm::vec3(10.00f,0, 1.3f);
+    monitorRenderTexureCamera->transform.SetRotation(glm::vec3(0));
+    monitorRenderTexureCamera->IntializeRenderTexture(specification);
+
+    monitorRenderTexureCamera2->InitializeCamera(CameraType::PERSPECTIVE, 45.0f, 0.1f, 1000.0f);
+    monitorRenderTexureCamera2->transform.position = glm::vec3(20.0f, 0, 1.3f);
+    monitorRenderTexureCamera2->transform.SetRotation(glm::vec3(0));
+    monitorRenderTexureCamera2->IntializeRenderTexture(specification);
    // renderTextureCamera->IntializeRenderTexture(new RenderTexture());
   
     isImguiPanelsEnable = true;
@@ -244,6 +260,9 @@ void ApplicationRenderer::Start()
 
     gameScenecamera->postprocessing->InitializePostProcessing();
 
+    monitorRenderTexureCamera->postprocessing->InitializePostProcessing();
+
+    monitorRenderTexureCamera2->postprocessing->InitializePostProcessing();
 
   
 
@@ -264,13 +283,21 @@ void ApplicationRenderer::Start()
 
      directionLight->transform.SetPosition(glm::vec3(-2.30f, 2.20f, 3));
     
-    
- 
+     std::string scifiTexturePath = "Models/Spacestation/SciFi.jpg";
+     std::string codeTexurePath = "Models/Spacestation/ComputerCode.jpg";
+
+     Texture* sciFiTexture = new Texture(scifiTexturePath);
+     Texture* codeTexture = new Texture(codeTexurePath);
 
      Model* quadWithTexture = new Model("Models/DefaultQuad/DefaultQuad.fbx");
-     quadWithTexture->transform.SetPosition(glm::vec3(5, 0, 0));
-     quadWithTexture->meshes[0]->meshMaterial->material()->diffuseTexture = renderTextureCamera1->renderTexture;
-     GraphicsRender::GetInstance().AddModelAndShader(quadWithTexture, alphaCutoutShader);
+     quadWithTexture->transform.SetPosition(glm::vec3(10, 0, 0));
+     quadWithTexture->meshes[0]->meshMaterial->material()->diffuseTexture = sciFiTexture;
+     GraphicsRender::GetInstance().AddModelAndShader(quadWithTexture, defaultShader);
+
+     Model* quadWithTexture2 = new Model("Models/DefaultQuad/DefaultQuad.fbx");
+     quadWithTexture2->transform.SetPosition(glm::vec3(20, 0, 0));
+     quadWithTexture2->meshes[0]->meshMaterial->material()->diffuseTexture = codeTexture;
+     GraphicsRender::GetInstance().AddModelAndShader(quadWithTexture2, defaultShader);
 
 
      GameScene();
@@ -318,7 +345,7 @@ void ApplicationRenderer::GameScene()
 
     Model* consoleScreen1 = new Model("Models/Spacestation/SM_Env_Consoles_01_screen_1_xyz_n_rgba_uv.ply");
     consoleScreen1->name = "Console  Screen 1";
-    consoleScreen1->meshes[0]->meshMaterial->material()->diffuseTexture = renderTextureCamera1->renderTexture;
+    consoleScreen1->meshes[0]->meshMaterial->material()->diffuseTexture = monitorRenderTexureCamera->renderTexture;
   //  corner1Screen1->transform.SetPosition(glm::vec3(5, 0, 5));
   //  corner1Screen1->transform.SetScale(glm::vec3(-1, 1, 1));
     GraphicsRender::GetInstance().AddModelAndShader(consoleScreen1, renderTextureShader);
@@ -336,7 +363,7 @@ void ApplicationRenderer::GameScene()
 
     Model* consoleScreen3 = new Model("Models/Spacestation/SM_Env_Consoles_01_screen_3_xyz_n_rgba_uv.ply");
     consoleScreen3->name = "Console  Screen 3";
-    consoleScreen3->meshes[0]->meshMaterial->material()->diffuseTexture = renderTextureCamera1->renderTexture;
+    consoleScreen3->meshes[0]->meshMaterial->material()->diffuseTexture = monitorRenderTexureCamera2->renderTexture;
     GraphicsRender::GetInstance().AddModelAndShader(consoleScreen3, renderTextureShader);
     
 
@@ -429,13 +456,8 @@ void ApplicationRenderer::GameScene()
     Wall2->transform.SetScale(glm::vec3(1, 1, 1));
     GraphicsRender::GetInstance().AddModelAndShader(Wall2, defaultShader);
 
-   // Model* asteroid1 = new Model("Models/Asteroids/asteroid_main_xyz_n_rgba_uv.ply");
-   // asteroid1->name = "Asteroid1";
-   //// asteroid1->meshes[0]->meshMaterial->material()->diffuseTexture = interiorTexture;
-   // asteroid1->transform.SetPosition(glm::vec3(0, 0, 0));
-   // asteroid1->transform.SetRotation(glm::vec3(0, 0, 0));
-   // asteroid1->transform.SetScale(glm::vec3(0.1f, 0.1f, 0.1f));
-   // GraphicsRender::GetInstance().AddModelAndShader(asteroid1, defaultShader);
+
+   
 
 }
 

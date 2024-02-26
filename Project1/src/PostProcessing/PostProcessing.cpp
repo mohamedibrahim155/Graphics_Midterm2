@@ -31,6 +31,10 @@ void PostProcessing::InitializePostProcessing()
 	pixelization = new PixelizationEffect(cameraWidthAndHeight.x, cameraWidthAndHeight.y);
 	pixelization->finalShader = finalShader;
 	AddEffect(pixelization);
+
+	flicker = new FlickerEffect(cameraWidthAndHeight.x, cameraWidthAndHeight.y);
+	flicker->finalShader = finalShader;
+	AddEffect(flicker);
 }
 
 void PostProcessing::ApplyPostprocessing(FrameBuffer* framebuffer)

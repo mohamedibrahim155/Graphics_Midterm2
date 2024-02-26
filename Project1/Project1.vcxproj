@@ -141,6 +141,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Dependencies\glad\src\glad.c" />
+    <ClCompile Include="src\PostProcessing\FlickerEffect.cpp" />
     <ClCompile Include="src\ComputerScreen\ComputerScreen.cpp" />
     <ClCompile Include="src\Asteroid\Asteroid.cpp" />
     <ClCompile Include="Extern\imGui\ImCurveEdit.cpp" />
@@ -203,9 +204,11 @@
     <ClCompile Include="src\UnLitMaterial.cpp" />
     <ClCompile Include="src\ImGui\WindowDockingPanel.cpp" />
     <ClCompile Include="src\ImGui\ToolPanel.cpp" />
+    <ClCompile Include="StaticEffect.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\stb_image.h" />
+    <ClInclude Include="src\PostProcessing\FlickerEffect.h" />
     <ClInclude Include="src\ComputerScreen\ComputerScreen.h" />
     <ClInclude Include="src\Asteroid\Asteroid.h" />
     <ClInclude Include="Extern\imGui\ImCurveEdit.h" />
@@ -275,6 +278,7 @@
     <ClInclude Include="src\UnLitMaterial.h" />
     <ClInclude Include="src\ImGui\WindowDockingPanel.h" />
     <ClInclude Include="src\ImGui\ToolPanel.h" />
+    <ClInclude Include="StaticEffect.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\AlphaBlendCombined.frag" />
@@ -290,6 +294,8 @@
     <None Include="Shaders\Light_FragmentShader2.frag" />
     <None Include="Shaders\PostProcessing\FinalOutputShader.frag" />
     <None Include="Shaders\PostProcessing\FinalOutputShader.vert" />
+    <None Include="Shaders\PostProcessing\Flicker.frag" />
+    <None Include="Shaders\PostProcessing\Flicker.vert" />
     <None Include="Shaders\PostProcessing\Pixelization.frag" />
     <None Include="Shaders\PostProcessing\Pixelization.vert" />
     <None Include="Shaders\RenderTexture.frag" />

@@ -207,6 +207,12 @@
     <ClCompile Include="src\ComputerScreen\ComputerScreen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\PostProcessing\FlickerEffect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StaticEffect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Shader.h">
@@ -419,6 +425,12 @@
     <ClInclude Include="src\ComputerScreen\ComputerScreen.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\PostProcessing\FlickerEffect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StaticEffect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Source.frag" />
@@ -449,5 +461,7 @@
     <None Include="Shaders\AlphaBlendCombined.vert" />
     <None Include="Shaders\RenderTexture.frag" />
     <None Include="Shaders\RenderTexture.vert" />
+    <None Include="Shaders\PostProcessing\Flicker.vert" />
+    <None Include="Shaders\PostProcessing\Flicker.frag" />
   </ItemGroup>
 </Project>

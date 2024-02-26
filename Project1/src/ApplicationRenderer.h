@@ -68,6 +68,9 @@ public:
 	Camera* renderTextureCamera3;
 	Camera* renderTextureCamera4;
 	Camera* renderTextureCamera5;
+
+	Camera* monitorRenderTexureCamera;
+	Camera* monitorRenderTexureCamera2;
 	bool isPlayMode = false;
 
 	glm::mat4 projection;

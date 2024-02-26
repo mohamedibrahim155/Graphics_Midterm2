@@ -87,3 +87,13 @@ int MathUtils::Math::GetRandomIntNumber(int min, int max)
 	return distribution(gen);
 }
 
+float MathUtils::Math::GetRandomFloatNumber(float min, float max) {
+	std::random_device rd;
+	std::mt19937 gen(rd());
+
+	// Use std::uniform_real_distribution for floating-point numbers
+	std::uniform_real_distribution<float> distribution(min, max);
+
+	return distribution(gen);
+}
+
