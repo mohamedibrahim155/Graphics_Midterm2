@@ -433,5 +433,7 @@
     <None Include="Shaders\PostProcessing\Pixelization.frag" />
     <None Include="Shaders\PostProcessing\FinalOutputShader.vert" />
     <None Include="Shaders\PostProcessing\FinalOutputShader.frag" />
+    <None Include="Shaders\AlphaBlendCombined.frag" />
+    <None Include="Shaders\AlphaBlendCombined.vert" />
   </ItemGroup>
 </Project>

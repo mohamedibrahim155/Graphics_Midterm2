@@ -125,13 +125,17 @@ void ApplicationRenderer::WindowInitialize(int width, int height,  std::string w
     GraphicsRender::GetInstance().SetCamera(sceneViewcamera);
 
     sceneViewcamera->InitializeCamera(CameraType::PERSPECTIVE, 45.0f, 0.1f, 100.0f);
-    sceneViewcamera->transform.SetPosition(  glm::vec3(-2.06f, 2.50, 16.24f));
-    sceneViewcamera->transform.SetRotation(  glm::vec3(0));
+    //sceneViewcamera->transform.SetPosition(  glm::vec3(-2.06f, 2.50, 16.24f));
+    sceneViewcamera->transform.SetPosition(  glm::vec3(1.92f, 2.79f, 8.77f));
+    
+    sceneViewcamera->transform.SetRotation(glm::vec3(-3.40f, 33.10f,0));
+   // sceneViewcamera->transform.SetRotation(glm::vec3(0));
 
     gameScenecamera->InitializeCamera(CameraType::PERSPECTIVE, 45.0f, 0.1f, 100.0f);
-    gameScenecamera->transform.SetPosition(glm::vec3(-2.06f, 2.50, 16.24f));
-    gameScenecamera->transform.SetRotation(glm::vec3(0));
-
+    //gameScenecamera->transform.SetPosition(glm::vec3(-2.06f, 2.50, 16.24f));
+    //gameScenecamera->transform.SetRotation(glm::vec3(0));
+    gameScenecamera->transform.SetPosition(glm::vec3(1.92f, 2.79f, 8.77f));
+    gameScenecamera->transform.SetRotation(glm::vec3(-3.40f, 33.10f, 0));
 
     renderTextureCamera->InitializeCamera(CameraType::PERSPECTIVE, 45.0f, 0.1f, 100.0f);
     renderTextureCamera->transform.position = glm::vec3(0, 0, -1.0f);
@@ -154,6 +158,9 @@ void ApplicationRenderer::InitializeShaders()
 
     alphaCutoutShader = new Shader("Shaders/DefaultShader_Vertex.vert", "Shaders/DefaultShader_Fragment.frag", ALPHA_CUTOUT);
     alphaCutoutShader->blendMode = ALPHA_CUTOUT;
+
+    alphaCombinedShader = new Shader("Shaders/AlphaBlendCombined.vert", "Shaders/AlphaBlendCombined.frag", ALPHA_BLEND);
+    alphaCombinedShader->blendMode = ALPHA_BLEND;
 
     skyboxShader = new Shader("Shaders/SkyboxShader.vert", "Shaders/SkyboxShader.frag");
     skyboxShader->modelUniform = false;
@@ -233,22 +240,29 @@ void ApplicationRenderer::Start()
 void ApplicationRenderer::GameScene()
 {
     std::string diffuseTextureFile = "Models/Spacestation/SpaceInteriors_Texture.png";
-    Texture* diffuseTexture = new Texture(diffuseTextureFile);
+
+    std::string UVMapperTextureFile = "Models/Spacestation/uv_mapper.png";
+    std::string fingerprintTextureFile = "Models/Spacestation/fingerprint-001.png";
+ //   std::string fingerprintTextureFile = "Models/Spacestation/fingerprint-001.png";
+
+    Texture* interiorTexture = new Texture(diffuseTextureFile);
+    Texture* UVMapperTexture = new Texture(UVMapperTextureFile);
+    Texture* fingerprintTexture = new Texture(fingerprintTextureFile);
 
     Model* console1 = new Model("Models/Spacestation/SM_Env_Consoles_01_xyz_n_rgba_uv.ply");
-    console1->meshes[0]->meshMaterial->material()->diffuseTexture = diffuseTexture;
+    console1->meshes[0]->meshMaterial->material()->diffuseTexture = interiorTexture;
    
     GraphicsRender::GetInstance().AddModelAndShader(console1, defaultShader);
 
     Model* cornerConsole1 = new Model("Models/Spacestation/SM_Env_Consoles_Corner_01_xyz_n_rgba_uv.ply");
     cornerConsole1->name = "Console 1";
-    cornerConsole1->meshes[0]->meshMaterial->material()->diffuseTexture = diffuseTexture;
+    cornerConsole1->meshes[0]->meshMaterial->material()->diffuseTexture = interiorTexture;
     cornerConsole1->transform.SetPosition(glm::vec3(-10, 0, 5));
     GraphicsRender::GetInstance().AddModelAndShader(cornerConsole1, defaultShader);
 
     Model* cornerConsole2 = new Model("Models/Spacestation/SM_Env_Consoles_Corner_01_xyz_n_rgba_uv.ply");
     cornerConsole2->name = "Console 2";
-    cornerConsole2->meshes[0]->meshMaterial->material()->diffuseTexture = diffuseTexture;
+    cornerConsole2->meshes[0]->meshMaterial->material()->diffuseTexture = interiorTexture;
     cornerConsole2->transform.SetPosition(glm::vec3(5, 0, 5));
     cornerConsole2->transform.SetScale(glm::vec3(-1, 1, 1));
     GraphicsRender::GetInstance().AddModelAndShader(cornerConsole2, defaultShader);
@@ -257,7 +271,7 @@ void ApplicationRenderer::GameScene()
 
     Model* consoleScreen1 = new Model("Models/Spacestation/SM_Env_Consoles_01_screen_1_xyz_n_rgba_uv.ply");
     consoleScreen1->name = "Console  Screen 1";
-    consoleScreen1->meshes[0]->meshMaterial->material()->diffuseTexture = diffuseTexture;
+    consoleScreen1->meshes[0]->meshMaterial->material()->diffuseTexture = interiorTexture;
   //  corner1Screen1->transform.SetPosition(glm::vec3(5, 0, 5));
   //  corner1Screen1->transform.SetScale(glm::vec3(-1, 1, 1));
     GraphicsRender::GetInstance().AddModelAndShader(consoleScreen1, defaultShader);
@@ -266,41 +280,92 @@ void ApplicationRenderer::GameScene()
 
     Model* consoleScreen2 = new Model("Models/Spacestation/SM_Env_Consoles_01_screen_2_xyz_n_rgba_uv.ply");
     consoleScreen2->name = "Console  Screen 2";
-    consoleScreen2->meshes[0]->meshMaterial->material()->diffuseTexture = diffuseTexture;
-    GraphicsRender::GetInstance().AddModelAndShader(consoleScreen2, defaultShader);
+    consoleScreen2->meshes[0]->meshMaterial->material()->alphaTexture = fingerprintTexture;    //UVMAP
+    consoleScreen2->meshes[0]->meshMaterial->material()->useMaskTexture = true;
+    GraphicsRender::GetInstance().AddModelAndShader(consoleScreen2, alphaBlendShader);
 
 
 
     Model* consoleScreen3 = new Model("Models/Spacestation/SM_Env_Consoles_01_screen_3_xyz_n_rgba_uv.ply");
     consoleScreen3->name = "Console  Screen 2";
-    consoleScreen3->meshes[0]->meshMaterial->material()->diffuseTexture = diffuseTexture;
+    consoleScreen3->meshes[0]->meshMaterial->material()->diffuseTexture = interiorTexture;
     GraphicsRender::GetInstance().AddModelAndShader(consoleScreen3, defaultShader);
     
     Model* corner1Screen1 = new Model("Models/Spacestation/SM_Env_Consoles_Corner_01_screen_1_xyz_n_rgba_uv.ply");
     corner1Screen1->name = "Corner_Console_1_Screen_1";
-    corner1Screen1->meshes[0]->meshMaterial->material()->diffuseTexture = diffuseTexture;
+    corner1Screen1->meshes[0]->meshMaterial->material()->diffuseTexture = interiorTexture;
     corner1Screen1->transform.SetPosition(glm::vec3(-0.6f, 0, 5));
     GraphicsRender::GetInstance().AddModelAndShader(corner1Screen1, defaultShader);
 
     Model* corner2Screen1 = new Model("Models/Spacestation/SM_Env_Consoles_Corner_01_screen_1_xyz_n_rgba_uv.ply");
     corner2Screen1->name = "Corner_Console_2_Screen_1";
-    corner2Screen1->meshes[0]->meshMaterial->material()->diffuseTexture = diffuseTexture;
+    corner2Screen1->meshes[0]->meshMaterial->material()->diffuseTexture = interiorTexture;
     corner2Screen1->transform.SetPosition(glm::vec3(-10.0f, 0, 5));
     GraphicsRender::GetInstance().AddModelAndShader(corner2Screen1, defaultShader);
 
 
     Model* corner1Screen2 = new Model("Models/Spacestation/SM_Env_Consoles_Corner_01_screen_2_xyz_n_rgba_uv.ply");
     corner1Screen2->name = "Corner_Console_1_Screen_2";
-    corner1Screen2->meshes[0]->meshMaterial->material()->diffuseTexture = diffuseTexture;
+    corner1Screen2->meshes[0]->meshMaterial->material()->alphaTexture = fingerprintTexture;  
+    corner1Screen2->meshes[0]->meshMaterial->material()->useMaskTexture = true;  //UVMAP
     corner1Screen2->transform.SetPosition(glm::vec3(-10.0f, 0, 5));
-    GraphicsRender::GetInstance().AddModelAndShader(corner1Screen2, defaultShader);
+    GraphicsRender::GetInstance().AddModelAndShader(corner1Screen2, alphaBlendShader);
 
     Model* corner2Screen2 = new Model("Models/Spacestation/SM_Env_Consoles_Corner_01_screen_2_xyz_n_rgba_uv.ply");
     corner2Screen2->name = "Corner_Console_2_Screen_2";
-    corner2Screen2->meshes[0]->meshMaterial->material()->diffuseTexture = diffuseTexture;
+    corner2Screen2->meshes[0]->meshMaterial->material()->alphaTexture = fingerprintTexture; //UVMAP
+    corner2Screen2->meshes[0]->meshMaterial->material()->useMaskTexture = true; 
     corner2Screen2->transform.SetPosition(glm::vec3(5.0f, 0, 5));
     corner2Screen2->transform.SetScale(glm::vec3(-1, 1, 1));
-    GraphicsRender::GetInstance().AddModelAndShader(corner2Screen2, defaultShader);
+    GraphicsRender::GetInstance().AddModelAndShader(corner2Screen2, alphaCombinedShader);
+
+    Model* floor1 = new Model("Models/Spacestation/Ply (converted)/SM_Env_Floor_01_xyz_n_rgba_uv.ply");
+    floor1->name = "Floor1";
+    floor1->meshes[0]->meshMaterial->material()->diffuseTexture = interiorTexture;
+    floor1->transform.SetPosition(glm::vec3(2.5f, 0, 0));
+    floor1->transform.SetScale(glm::vec3(1, 1, 1));
+    GraphicsRender::GetInstance().AddModelAndShader(floor1, defaultShader);
+
+    Model* floor2 = new Model("Models/Spacestation/Ply (converted)/SM_Env_Floor_01_xyz_n_rgba_uv.ply");
+    floor2->name = "Floor2";
+    floor2->meshes[0]->meshMaterial->material()->diffuseTexture = interiorTexture; 
+    floor2->transform.SetPosition(glm::vec3(-2.5f, 0, 0));
+    floor2->transform.SetScale(glm::vec3(1, 1, 1));
+    GraphicsRender::GetInstance().AddModelAndShader(floor2, defaultShader);
+    
+
+    Model* floor3 = new Model("Models/Spacestation/Ply (converted)/SM_Env_Floor_01_xyz_n_rgba_uv.ply");
+    floor3->name = "Floor3";
+    floor3->meshes[0]->meshMaterial->material()->diffuseTexture = interiorTexture;
+    floor3->transform.SetPosition(glm::vec3(2.5f, 0, 5));
+    floor3->transform.SetScale(glm::vec3(1, 1, 1));
+    GraphicsRender::GetInstance().AddModelAndShader(floor3, defaultShader);
+
+
+    Model* floor4 = new Model("Models/Spacestation/Ply (converted)/SM_Env_Floor_01_xyz_n_rgba_uv.ply");
+    floor4->name = "Floor4";
+    floor4->meshes[0]->meshMaterial->material()->diffuseTexture = interiorTexture; 
+    floor4->transform.SetPosition(glm::vec3(-2.5f, 0, 5));
+    floor4->transform.SetScale(glm::vec3(1, 1, 1));
+    GraphicsRender::GetInstance().AddModelAndShader(floor4, defaultShader);
+
+
+
+    Model* Wall1 = new Model("Models/Spacestation/Ply (converted)/SM_Env_Wall_Curved_01_xyz_n_rgba_uv.ply");
+    Wall1->name = "Wall1";
+    Wall1->meshes[0]->meshMaterial->material()->diffuseTexture = interiorTexture;
+    Wall1->transform.SetPosition(glm::vec3(3.5f, 0, 10));
+    Wall1->transform.SetRotation(glm::vec3(0, -90, 0));
+    Wall1->transform.SetScale(glm::vec3(1, 1, 1));
+    GraphicsRender::GetInstance().AddModelAndShader(Wall1, defaultShader);
+
+    Model* Wall2 = new Model("Models/Spacestation/Ply (converted)/SM_Env_Wall_Curved_01_xyz_n_rgba_uv.ply");
+    Wall2->name = "Wall2";
+    Wall2->meshes[0]->meshMaterial->material()->diffuseTexture = interiorTexture;
+    Wall2->transform.SetPosition(glm::vec3(-8.70f, 0, 5.0f));
+    Wall2->transform.SetRotation(glm::vec3(0, 90, 0));
+    Wall2->transform.SetScale(glm::vec3(1, 1, 1));
+    GraphicsRender::GetInstance().AddModelAndShader(Wall2, defaultShader);
 }
 
 void ApplicationRenderer::PreRender()
@@ -500,6 +565,14 @@ void ApplicationRenderer::RenderForCamera(Camera* camera, FrameBuffer* framebuff
     alphaBlendShader->setVec3("viewPos", camera->transform.position.x, camera->transform.position.y, camera->transform.position.z);
     alphaBlendShader->setFloat("time", scrollTime);
     alphaBlendShader->setBool("isDepthBuffer", false);
+
+    alphaCombinedShader->Bind();
+    LightManager::GetInstance().UpdateUniformValuesToShader(alphaCombinedShader);
+    alphaCombinedShader->setMat4("projection", projection);
+    alphaCombinedShader->setMat4("view", view);
+    alphaCombinedShader->setVec3("viewPos", camera->transform.position.x, camera->transform.position.y, camera->transform.position.z);
+    alphaCombinedShader->setFloat("time", scrollTime);
+    alphaCombinedShader->setBool("isDepthBuffer", false);
 
     alphaCutoutShader->Bind();
     LightManager::GetInstance().UpdateUniformValuesToShader(alphaCutoutShader);

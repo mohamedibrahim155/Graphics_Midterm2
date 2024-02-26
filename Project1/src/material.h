@@ -31,6 +31,7 @@ public:
 	BaseTexture* diffuseTexture; 
 	BaseTexture* specularTexture;
 	BaseTexture* alphaTexture;
+	BaseTexture* combineTexure = nullptr;
 	AmbientType ambientType;
 
 	float ambient;
