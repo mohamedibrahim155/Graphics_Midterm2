@@ -297,7 +297,7 @@ void ApplicationRenderer::Start()
 
      Light* pointLight = new Light();
      pointLight->Initialize(LightType::POINT_LIGHT, 1);
-     pointLight->SetAmbientColor(glm::vec4(1, 1, 1, 1.0f));
+     pointLight->SetAmbientColor(glm::vec4(1.5f, 1.5f, 1.5f, 1.0f));
      //directionLight->SetAmbientColor(glm::vec4(15, 15, 15, 1.0f));
    //  directionLight->SetAmbientColor(glm::vec4(0.4f, 0.4f, 0.4f, 1.0f));
      pointLight->SetIntensity(0.75f);
@@ -323,8 +323,7 @@ void ApplicationRenderer::Start()
 
      Light* pointLight3 = new Light();
      pointLight3->Initialize(LightType::POINT_LIGHT, 1);
-     pointLight3->SetAmbientColor(glm::vec4(1, 1, 1, 1.0f));
-     //directionLight->SetAmbientColor(glm::vec4(15, 15, 15, 1.0f));
+     pointLight3->SetAmbientColor(glm::vec4(1.5f, 1.5f, 1.5f, 1.0f));     //directionLight->SetAmbientColor(glm::vec4(15, 15, 15, 1.0f));
    //  directionLight->SetAmbientColor(glm::vec4(0.4f, 0.4f, 0.4f, 1.0f));
      pointLight3->SetIntensity(0.75f);
      pointLight3->SetColor(glm::vec4(1, 1, 1, 1.0f));
