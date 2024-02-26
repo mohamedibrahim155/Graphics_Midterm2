@@ -335,21 +335,24 @@ void ApplicationRenderer::GameScene()
 
     Model* consoleScreen3 = new Model("Models/Spacestation/SM_Env_Consoles_01_screen_3_xyz_n_rgba_uv.ply");
     consoleScreen3->name = "Console  Screen 3";
-    consoleScreen3->meshes[0]->meshMaterial->material()->diffuseTexture = renderTextureCamera3->renderTexture;
+    consoleScreen3->meshes[0]->meshMaterial->material()->diffuseTexture = renderTextureCamera1->renderTexture;
     GraphicsRender::GetInstance().AddModelAndShader(consoleScreen3, renderTextureShader);
     
-    Model* corner1Screen1 = new Model("Models/Spacestation/SM_Env_Consoles_Corner_01_screen_1_xyz_n_rgba_uv.ply");
+  //  Model* corner1Screen1 = new Model("Models/Spacestation/SM_Env_Consoles_Corner_01_screen_1_xyz_n_rgba_uv.ply");
+    Model* corner1Screen1 = new Model("Models/Spacestation/SM_Env_Consoles_01_screen_1_xyz_n_rgba_uv.ply");
     corner1Screen1->name = "Corner_Console_1_Screen_1";
-    corner1Screen1->meshes[0]->meshMaterial->material()->diffuseTexture = renderTextureCamera3->renderTexture;
-   // corner1Screen1->transform.SetPosition(glm::vec3(-0.6f, 0, 5));
-    corner1Screen1->transform.SetPosition(glm::vec3(-0.6f, -0.60, 0.63));
-    corner1Screen1->transform.SetRotation(glm::vec3(90.00, 0, 0));
-    GraphicsRender::GetInstance().AddModelAndShader(corner1Screen1, renderTextureShader);
+    corner1Screen1->meshes[0]->meshMaterial->material()->diffuseTexture = renderTextureCamera1->renderTexture;
+    corner1Screen1->transform.SetPosition(glm::vec3(2, 0, 7));
+    corner1Screen1->transform.SetRotation(glm::vec3(0, -90, 0));
+  //  corner1Screen1->transform.SetPosition(glm::vec3(-0.6f, -0.60, 0.63));
+    GraphicsRender::GetInstance().AddModelAndShader(corner1Screen1, renderTextureShader); //////// need to checkl
 
-    Model* corner2Screen1 = new Model("Models/Spacestation/SM_Env_Consoles_Corner_01_screen_1_xyz_n_rgba_uv.ply");
+    Model* corner2Screen1 = new Model("Models/Spacestation/SM_Env_Consoles_01_screen_1_xyz_n_rgba_uv.ply");
     corner2Screen1->name = "Corner_Console_2_Screen_1";
-    corner2Screen1->meshes[0]->meshMaterial->material()->diffuseTexture = renderTextureCamera4->renderTexture;
-    corner2Screen1->transform.SetPosition(glm::vec3(-10.0f, 0, 5));
+    corner2Screen1->meshes[0]->meshMaterial->material()->diffuseTexture = renderTextureCamera1->renderTexture;
+    //corner2Screen1->transform.SetPosition(glm::vec3(-10.0f, 0, 5));
+    corner2Screen1->transform.SetPosition(glm::vec3(-7.00f, 0, -2.00f));
+    corner2Screen1->transform.SetRotation(glm::vec3(0, 90, 0));
     GraphicsRender::GetInstance().AddModelAndShader(corner2Screen1, renderTextureShader);
 
 
@@ -641,6 +644,15 @@ void ApplicationRenderer::RenderForCamera(Camera* camera, FrameBuffer* framebuff
     skyBoxView = glm::mat4(glm::mat3(camera->GetViewMatrix()));
 
 
+    renderTextureShader->Bind();
+    LightManager::GetInstance().UpdateUniformValuesToShader(renderTextureShader);
+
+    renderTextureShader->setMat4("projection", projection);
+    renderTextureShader->setMat4("view", view);
+    renderTextureShader->setVec3("viewPos", camera->transform.position.x, camera->transform.position.y, camera->transform.position.z);
+    renderTextureShader->setFloat("time", scrollTime);
+    renderTextureShader->setBool("isDepthBuffer", false);
+
     defaultShader->Bind();
     LightManager::GetInstance().UpdateUniformValuesToShader(defaultShader);
 
@@ -650,14 +662,7 @@ void ApplicationRenderer::RenderForCamera(Camera* camera, FrameBuffer* framebuff
     defaultShader->setFloat("time", scrollTime);
     defaultShader->setBool("isDepthBuffer", false);
 
-    renderTextureShader->Bind();
-    LightManager::GetInstance().UpdateUniformValuesToShader(renderTextureShader);
-
-    renderTextureShader->setMat4("projection", projection);
-    renderTextureShader->setMat4("view", view);
-    renderTextureShader->setVec3("viewPos", camera->transform.position.x, camera->transform.position.y, camera->transform.position.z);
-    renderTextureShader->setFloat("time", scrollTime);
-    renderTextureShader->setBool("isDepthBuffer", false);
+    
 
 
     alphaBlendShader->Bind();
