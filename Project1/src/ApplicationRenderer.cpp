@@ -172,8 +172,8 @@ void ApplicationRenderer::WindowInitialize(int width, int height,  std::string w
     renderTextureCamera4->IntializeRenderTexture(specification);
 
     renderTextureCamera5->InitializeCamera(CameraType::PERSPECTIVE, 45.0f, 0.1f, 1000.0f);
-    renderTextureCamera5->transform.position = glm::vec3(-18.94f, 3.90f, 45.72f);
-    renderTextureCamera5->transform.SetRotation(glm::vec3(0, 90, 45.72f));
+    renderTextureCamera5->transform.position = glm::vec3(-25.66f, 9.41f, 35.00f);
+    renderTextureCamera5->transform.SetRotation(glm::vec3(-16.30f, 128.40f, 0.00));
     renderTextureCamera5->IntializeRenderTexture(specification);
    // renderTextureCamera->IntializeRenderTexture(new RenderTexture());
   
@@ -206,6 +206,7 @@ void ApplicationRenderer::InitializeShaders()
     GraphicsRender::GetInstance().defaultShader = defaultShader;
     GraphicsRender::GetInstance().solidColorShader = solidColorShader;
     GraphicsRender::GetInstance().stencilShader = stencilShader; 
+    GraphicsRender::GetInstance().renderTextureShader = renderTextureShader;
 
    
 
@@ -338,22 +339,28 @@ void ApplicationRenderer::GameScene()
     consoleScreen3->meshes[0]->meshMaterial->material()->diffuseTexture = renderTextureCamera1->renderTexture;
     GraphicsRender::GetInstance().AddModelAndShader(consoleScreen3, renderTextureShader);
     
-  //  Model* corner1Screen1 = new Model("Models/Spacestation/SM_Env_Consoles_Corner_01_screen_1_xyz_n_rgba_uv.ply");
-    Model* corner1Screen1 = new Model("Models/Spacestation/SM_Env_Consoles_01_screen_1_xyz_n_rgba_uv.ply");
+
+    ComputerScreen* corner1Screen1 = new ComputerScreen(0);
     corner1Screen1->name = "Corner_Console_1_Screen_1";
-    corner1Screen1->meshes[0]->meshMaterial->material()->diffuseTexture = renderTextureCamera1->renderTexture;
+    corner1Screen1->SetTexture(renderTextureCamera1->renderTexture);
+
+    corner1Screen1->SetRenderTextures({ renderTextureCamera1->renderTexture ,renderTextureCamera2->renderTexture,
+        renderTextureCamera3->renderTexture,renderTextureCamera4->renderTexture,renderTextureCamera5->renderTexture });
+
     corner1Screen1->transform.SetPosition(glm::vec3(2, 0, 7));
     corner1Screen1->transform.SetRotation(glm::vec3(0, -90, 0));
-  //  corner1Screen1->transform.SetPosition(glm::vec3(-0.6f, -0.60, 0.63));
-    GraphicsRender::GetInstance().AddModelAndShader(corner1Screen1, renderTextureShader); //////// need to checkl
+  
 
-    Model* corner2Screen1 = new Model("Models/Spacestation/SM_Env_Consoles_01_screen_1_xyz_n_rgba_uv.ply");
+    ComputerScreen* corner2Screen1 = new ComputerScreen(0);
     corner2Screen1->name = "Corner_Console_2_Screen_1";
-    corner2Screen1->meshes[0]->meshMaterial->material()->diffuseTexture = renderTextureCamera1->renderTexture;
-    //corner2Screen1->transform.SetPosition(glm::vec3(-10.0f, 0, 5));
+    corner2Screen1->SetTexture(renderTextureCamera1->renderTexture);
+
+    corner2Screen1->SetRenderTextures({ renderTextureCamera1->renderTexture ,renderTextureCamera2->renderTexture,
+    renderTextureCamera3->renderTexture,renderTextureCamera4->renderTexture,renderTextureCamera5->renderTexture });
+
     corner2Screen1->transform.SetPosition(glm::vec3(-7.00f, 0, -2.00f));
     corner2Screen1->transform.SetRotation(glm::vec3(0, 90, 0));
-    GraphicsRender::GetInstance().AddModelAndShader(corner2Screen1, renderTextureShader);
+  
 
 
     Model* corner1Screen2 = new Model("Models/Spacestation/SM_Env_Consoles_Corner_01_screen_2_xyz_n_rgba_uv.ply");

@@ -27,6 +27,7 @@
 #include "EntityManager/EntityManager.h"
 #include "CameraManager.h"
 #include "Asteroid/Asteroid.h"
+#include "ComputerScreen//ComputerScreen.h"
 
 class ApplicationRenderer
 {
