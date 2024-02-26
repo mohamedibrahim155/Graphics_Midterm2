@@ -26,7 +26,7 @@
 #include "InputManager/InputManager.h"
 #include "EntityManager/EntityManager.h"
 #include "CameraManager.h"
-
+#include "Asteroid/Asteroid.h"
 
 class ApplicationRenderer
 {
@@ -45,6 +45,7 @@ public:
 	
 	void Start();
 	void GameScene();
+	void AsteroidScene();
 	void PreRender();
 	void Render();
 	void PostRender();

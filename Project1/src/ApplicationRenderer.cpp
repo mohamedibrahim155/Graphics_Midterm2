@@ -124,20 +124,20 @@ void ApplicationRenderer::WindowInitialize(int width, int height,  std::string w
 
     GraphicsRender::GetInstance().SetCamera(sceneViewcamera);
 
-    sceneViewcamera->InitializeCamera(CameraType::PERSPECTIVE, 45.0f, 0.1f, 100.0f);
+    sceneViewcamera->InitializeCamera(CameraType::PERSPECTIVE, 45.0f, 0.1f, 1000.0f);
     //sceneViewcamera->transform.SetPosition(  glm::vec3(-2.06f, 2.50, 16.24f));
     sceneViewcamera->transform.SetPosition(  glm::vec3(1.92f, 2.79f, 8.77f));
     
     sceneViewcamera->transform.SetRotation(glm::vec3(-3.40f, 33.10f,0));
    // sceneViewcamera->transform.SetRotation(glm::vec3(0));
 
-    gameScenecamera->InitializeCamera(CameraType::PERSPECTIVE, 45.0f, 0.1f, 100.0f);
+    gameScenecamera->InitializeCamera(CameraType::PERSPECTIVE, 45.0f, 0.1f, 1000.0f);
     //gameScenecamera->transform.SetPosition(glm::vec3(-2.06f, 2.50, 16.24f));
     //gameScenecamera->transform.SetRotation(glm::vec3(0));
     gameScenecamera->transform.SetPosition(glm::vec3(1.92f, 2.79f, 8.77f));
     gameScenecamera->transform.SetRotation(glm::vec3(-3.40f, 33.10f, 0));
 
-    renderTextureCamera->InitializeCamera(CameraType::PERSPECTIVE, 45.0f, 0.1f, 100.0f);
+    renderTextureCamera->InitializeCamera(CameraType::PERSPECTIVE, 45.0f, 0.1f, 1000.0f);
     renderTextureCamera->transform.position = glm::vec3(0, 0, -1.0f);
 
     renderTextureCamera->IntializeRenderTexture(specification);
@@ -214,8 +214,10 @@ void ApplicationRenderer::Start()
      //spotlight->transform.SetPosition(glm::vec3(-2.0f, 0.0f, -3.0f));
 
      Light* directionLight = new Light();
-     directionLight->Initialize(LightType::POINT_LIGHT, 1);
-     directionLight->SetAmbientColor(glm::vec4(4, 4, 4, 1.0f));
+     directionLight->Initialize(LightType::DIRECTION_LIGHT, 1);
+     //directionLight->SetAmbientColor(glm::vec4(4, 4, 4, 1.0f));
+     //directionLight->SetAmbientColor(glm::vec4(15, 15, 15, 1.0f));
+     directionLight->SetAmbientColor(glm::vec4(0.4f, 0.4f, 0.4f, 1.0f));
      directionLight->SetIntensity(0.75f);
      directionLight->SetColor(glm::vec4(1, 1, 1, 1.0f));
      directionLight->SetAttenuation(1, 1, 0.01f);
@@ -233,7 +235,7 @@ void ApplicationRenderer::Start()
 
 
      GameScene();
-
+     AsteroidScene();
 
 }
 
@@ -379,6 +381,43 @@ void ApplicationRenderer::GameScene()
     Wall2->transform.SetRotation(glm::vec3(0, 90, 0));
     Wall2->transform.SetScale(glm::vec3(1, 1, 1));
     GraphicsRender::GetInstance().AddModelAndShader(Wall2, defaultShader);
+
+   // Model* asteroid1 = new Model("Models/Asteroids/asteroid_main_xyz_n_rgba_uv.ply");
+   // asteroid1->name = "Asteroid1";
+   //// asteroid1->meshes[0]->meshMaterial->material()->diffuseTexture = interiorTexture;
+   // asteroid1->transform.SetPosition(glm::vec3(0, 0, 0));
+   // asteroid1->transform.SetRotation(glm::vec3(0, 0, 0));
+   // asteroid1->transform.SetScale(glm::vec3(0.1f, 0.1f, 0.1f));
+   // GraphicsRender::GetInstance().AddModelAndShader(asteroid1, defaultShader);
+
+}
+
+void ApplicationRenderer::AsteroidScene()
+{
+
+
+    Asteroid* asteroidMain = new Asteroid(1);
+    asteroidMain->name = "AsteroidMain";
+    asteroidMain->transform.SetPosition(glm::vec3(0, 0, 20));
+    asteroidMain->transform.SetRotation(glm::vec3(0, 180, 0));
+
+    Asteroid* asteroid2 = new Asteroid(2);
+    asteroid2->name = "asteroid2";
+    asteroid2->transform.SetPosition(glm::vec3(0, 0, 20));
+    asteroid2->transform.SetRotation(glm::vec3(0, 180, 0));
+
+    Asteroid* asteroid3 = new Asteroid(3);
+    asteroid3->name = "asteroid3";
+    asteroid3->transform.SetPosition(glm::vec3(0, 0, 20));
+    asteroid3->transform.SetRotation(glm::vec3(0, 180, 0));
+ 
+    Asteroid* asteroid4 = new Asteroid(0);
+    asteroid4->name = "asteroid4";
+    asteroid4->transform.SetPosition(glm::vec3(0, 0, 20));
+    asteroid4->transform.SetRotation(glm::vec3(0, 180, 0));
+ 
+
+ 
 }
 
 void ApplicationRenderer::PreRender()
