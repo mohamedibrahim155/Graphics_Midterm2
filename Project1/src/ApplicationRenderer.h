@@ -44,6 +44,7 @@ public:
 	void InitializeSkybox();
 	
 	void Start();
+	void GameScene();
 	void PreRender();
 	void Render();
 	void PostRender();

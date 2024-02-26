@@ -195,26 +195,8 @@ void ApplicationRenderer::Start()
 
     gameScenecamera->postprocessing->InitializePostProcessing();
 
-    Model* floor = new Model((char*)"Models/Floor/Floor.fbx");
-    floor->transform.SetRotation(glm::vec3(90, 0, 0));
-    floor->transform.SetPosition(glm::vec3(0, -2, 0));
-   
-    Model* floor2 = new Model(*floor);
-    floor2->transform.SetRotation(glm::vec3(90, 0, 0));
-    floor2->transform.SetPosition(glm::vec3(0, 2, 0));
-   
-   
-    Model* floor3 = new Model(*floor);
-   
-    floor3->transform.SetPosition(glm::vec3(-2, 0, 0));
-    Model* floor4 = new Model(*floor);
-    floor4->transform.SetPosition(glm::vec3(2, 0, 0));
-    floor4->meshes[0]->meshMaterial->material()->useMaskTexture = false;
-    floor4->meshes[0]->meshMaterial->material()->SetBaseColor(glm::vec4(1, 1, 1, 0.5f));
 
-    
-    
-
+  
 
      Model* directionLightModel = new Model("Models/DefaultSphere/Sphere_1_unit_Radius.ply",false, true);
      directionLightModel->transform.SetScale(glm::vec3(0.5f));
@@ -222,7 +204,7 @@ void ApplicationRenderer::Start()
      //spotlight->transform.SetPosition(glm::vec3(-2.0f, 0.0f, -3.0f));
 
      Light* directionLight = new Light();
-     directionLight->Initialize(LightType::DIRECTION_LIGHT, 1);
+     directionLight->Initialize(LightType::POINT_LIGHT, 1);
      directionLight->SetAmbientColor(glm::vec4(0.2f, 0.2f, 0.2f, 1.0f));
 
      directionLight->SetColor(glm::vec4(1, 1, 1, 1.0f));
@@ -233,33 +215,38 @@ void ApplicationRenderer::Start()
      directionLight->transform.SetPosition(glm::vec3(0, 0, 5));
     
     
-     Model* plant = new Model("Models/Plant.fbm/Plant.fbx");
-     Texture* plantAlphaTexture = new Texture();
+ 
 
      Model* quadWithTexture = new Model("Models/DefaultQuad/DefaultQuad.fbx");
      quadWithTexture->transform.SetPosition(glm::vec3(5, 0, 0));
      quadWithTexture->meshes[0]->meshMaterial->material()->diffuseTexture = renderTextureCamera->renderTexture;
-
-
-
-     GraphicsRender::GetInstance().AddModelAndShader(plant, alphaCutoutShader);
      GraphicsRender::GetInstance().AddModelAndShader(quadWithTexture, alphaCutoutShader);
-     GraphicsRender::GetInstance().AddModelAndShader(floor, defaultShader);
-     GraphicsRender::GetInstance().AddModelAndShader(floor2, defaultShader);
-     GraphicsRender::GetInstance().AddModelAndShader(floor3, defaultShader);
-     GraphicsRender::GetInstance().AddModelAndShader(floor4, alphaBlendShader);
- 
-     //LightRenderer
-     //LightManager::GetInstance().AddLight(directionLight);
-    // lightManager.AddLight(directionLight);
-   //  lightManager.AddNewLight(spot);
-   //  lightManager.SetUniforms(defaultShader->ID);
-   //  PhysicsObject* SpherePhyiscs = new PhysicsObject(Sphere);
-   //  SpherePhyiscs->Initialize(false, true, DYNAMIC);
 
-   //  PhysicsEngine.AddPhysicsObjects(SpherePhyiscs);
 
-  
+     GameScene();
+
+
+}
+
+void ApplicationRenderer::GameScene()
+{
+
+    Model* console1 = new Model("Models/Spacestation/SM_Env_Consoles_01_xyz_n_rgba_uv.ply");
+    GraphicsRender::GetInstance().AddModelAndShader(console1, defaultShader);
+
+    Model* cornerConsole1 = new Model("Models/Spacestation/SM_Env_Consoles_Corner_01_xyz_n_rgba_uv.ply");
+    cornerConsole1->name = "Console 1";
+    cornerConsole1->transform.SetPosition(glm::vec3(-10, 0, 5));
+    GraphicsRender::GetInstance().AddModelAndShader(cornerConsole1, defaultShader);
+
+    Model* cornerConsole2 = new Model("Models/Spacestation/SM_Env_Consoles_Corner_01_xyz_n_rgba_uv.ply");
+    cornerConsole2->name = "Console 2";
+    cornerConsole2->transform.SetPosition(glm::vec3(5, 0, 5));
+    cornerConsole2->transform.SetScale(glm::vec3(-1, 1, 1));
+    GraphicsRender::GetInstance().AddModelAndShader(cornerConsole2, defaultShader);
+
+
+
 
 }
 
