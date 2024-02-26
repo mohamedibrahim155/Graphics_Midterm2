@@ -9,8 +9,20 @@ ApplicationRenderer::ApplicationRenderer()
     gameScenecamera = new Camera();
     gameScenecamera->name = "GameScene Camera";
 
-    renderTextureCamera = new Camera();
-    renderTextureCamera->name = "RenderTexture Camera";
+    renderTextureCamera1 = new Camera();
+    renderTextureCamera1->name = "RenderTexture1 Camera";
+
+    renderTextureCamera2 = new Camera();
+    renderTextureCamera2->name = "RenderTexture2 Camera";
+
+    renderTextureCamera3 = new Camera();
+    renderTextureCamera3->name = "RenderTexture3 Camera";
+
+    renderTextureCamera4 = new Camera();
+    renderTextureCamera4->name = "RenderTexture4 Camera";
+
+    renderTextureCamera5 = new Camera();
+    renderTextureCamera5->name = "RenderTexture5 Camera";
 }
 
 ApplicationRenderer::~ApplicationRenderer()
@@ -137,10 +149,32 @@ void ApplicationRenderer::WindowInitialize(int width, int height,  std::string w
     gameScenecamera->transform.SetPosition(glm::vec3(1.92f, 2.79f, 8.77f));
     gameScenecamera->transform.SetRotation(glm::vec3(-3.40f, 33.10f, 0));
 
-    renderTextureCamera->InitializeCamera(CameraType::PERSPECTIVE, 45.0f, 0.1f, 1000.0f);
-    renderTextureCamera->transform.position = glm::vec3(0, 0, -1.0f);
+    renderTextureCamera1->InitializeCamera(CameraType::PERSPECTIVE, 45.0f, 0.1f, 1000.0f);
+    renderTextureCamera1->transform.position = glm::vec3(-51, 3.50f,50);
+    renderTextureCamera1->transform.SetRotation(glm::vec3(0, 270, 0));
 
-    renderTextureCamera->IntializeRenderTexture(specification);
+    renderTextureCamera1->IntializeRenderTexture(specification);
+
+
+    renderTextureCamera2->InitializeCamera(CameraType::PERSPECTIVE, 45.0f, 0.1f, 1000.0f);
+    renderTextureCamera2->transform.position = glm::vec3(0, -7.80f, 12.62f);
+    renderTextureCamera2->transform.SetRotation(glm::vec3(35,175, 0));
+    renderTextureCamera2->IntializeRenderTexture(specification);
+
+    renderTextureCamera3->InitializeCamera(CameraType::PERSPECTIVE, 45.0f, 0.1f, 1000.0f);
+    renderTextureCamera3->transform.position = glm::vec3(29.71f, -8.40f, 43.35f);
+    renderTextureCamera3->transform.SetRotation(glm::vec3(43.10f, 90, 0));
+    renderTextureCamera3->IntializeRenderTexture(specification);
+
+    renderTextureCamera4->InitializeCamera(CameraType::PERSPECTIVE, 45.0f, 0.1f, 1000.0f);
+    renderTextureCamera4->transform.position = glm::vec3(-18.97f, -25.55f, 29.54f);
+    renderTextureCamera4->transform.SetRotation(glm::vec3(50.00f, 145.00f,0));
+    renderTextureCamera4->IntializeRenderTexture(specification);
+
+    renderTextureCamera5->InitializeCamera(CameraType::PERSPECTIVE, 45.0f, 0.1f, 1000.0f);
+    renderTextureCamera5->transform.position = glm::vec3(-18.94f, 3.90f, 45.72f);
+    renderTextureCamera5->transform.SetRotation(glm::vec3(0, 90, 45.72f));
+    renderTextureCamera5->IntializeRenderTexture(specification);
    // renderTextureCamera->IntializeRenderTexture(new RenderTexture());
   
     isImguiPanelsEnable = true;
@@ -149,6 +183,8 @@ void ApplicationRenderer::WindowInitialize(int width, int height,  std::string w
 void ApplicationRenderer::InitializeShaders()
 {
     defaultShader = new Shader("Shaders/DefaultShader_Vertex.vert", "Shaders/DefaultShader_Fragment.frag");
+
+
     solidColorShader = new Shader("Shaders/SolidColor_Vertex.vert", "Shaders/SolidColor_Fragment.frag", SOLID);
     stencilShader = new Shader("Shaders/StencilOutline.vert", "Shaders/StencilOutline.frag", OPAQUE);
     //ScrollShader = new Shader("Shaders/ScrollTexture.vert", "Shaders/ScrollTexture.frag");
@@ -164,6 +200,8 @@ void ApplicationRenderer::InitializeShaders()
 
     skyboxShader = new Shader("Shaders/SkyboxShader.vert", "Shaders/SkyboxShader.frag");
     skyboxShader->modelUniform = false;
+
+    renderTextureShader = new Shader("Shaders/RenderTexture.vert", "Shaders/RenderTexture.frag");
 
     GraphicsRender::GetInstance().defaultShader = defaultShader;
     GraphicsRender::GetInstance().solidColorShader = solidColorShader;
@@ -215,9 +253,9 @@ void ApplicationRenderer::Start()
 
      Light* directionLight = new Light();
      directionLight->Initialize(LightType::DIRECTION_LIGHT, 1);
-     //directionLight->SetAmbientColor(glm::vec4(4, 4, 4, 1.0f));
+     directionLight->SetAmbientColor(glm::vec4(1, 1, 1, 1.0f));
      //directionLight->SetAmbientColor(glm::vec4(15, 15, 15, 1.0f));
-     directionLight->SetAmbientColor(glm::vec4(0.4f, 0.4f, 0.4f, 1.0f));
+   //  directionLight->SetAmbientColor(glm::vec4(0.4f, 0.4f, 0.4f, 1.0f));
      directionLight->SetIntensity(0.75f);
      directionLight->SetColor(glm::vec4(1, 1, 1, 1.0f));
      directionLight->SetAttenuation(1, 1, 0.01f);
@@ -230,7 +268,7 @@ void ApplicationRenderer::Start()
 
      Model* quadWithTexture = new Model("Models/DefaultQuad/DefaultQuad.fbx");
      quadWithTexture->transform.SetPosition(glm::vec3(5, 0, 0));
-     quadWithTexture->meshes[0]->meshMaterial->material()->diffuseTexture = renderTextureCamera->renderTexture;
+     quadWithTexture->meshes[0]->meshMaterial->material()->diffuseTexture = renderTextureCamera1->renderTexture;
      GraphicsRender::GetInstance().AddModelAndShader(quadWithTexture, alphaCutoutShader);
 
 
@@ -279,10 +317,10 @@ void ApplicationRenderer::GameScene()
 
     Model* consoleScreen1 = new Model("Models/Spacestation/SM_Env_Consoles_01_screen_1_xyz_n_rgba_uv.ply");
     consoleScreen1->name = "Console  Screen 1";
-    consoleScreen1->meshes[0]->meshMaterial->material()->diffuseTexture = interiorTexture;
+    consoleScreen1->meshes[0]->meshMaterial->material()->diffuseTexture = renderTextureCamera1->renderTexture;
   //  corner1Screen1->transform.SetPosition(glm::vec3(5, 0, 5));
   //  corner1Screen1->transform.SetScale(glm::vec3(-1, 1, 1));
-    GraphicsRender::GetInstance().AddModelAndShader(consoleScreen1, defaultShader);
+    GraphicsRender::GetInstance().AddModelAndShader(consoleScreen1, renderTextureShader);
 
 
 
@@ -296,21 +334,23 @@ void ApplicationRenderer::GameScene()
 
 
     Model* consoleScreen3 = new Model("Models/Spacestation/SM_Env_Consoles_01_screen_3_xyz_n_rgba_uv.ply");
-    consoleScreen3->name = "Console  Screen 2";
-    consoleScreen3->meshes[0]->meshMaterial->material()->diffuseTexture = interiorTexture;
-    GraphicsRender::GetInstance().AddModelAndShader(consoleScreen3, defaultShader);
+    consoleScreen3->name = "Console  Screen 3";
+    consoleScreen3->meshes[0]->meshMaterial->material()->diffuseTexture = renderTextureCamera3->renderTexture;
+    GraphicsRender::GetInstance().AddModelAndShader(consoleScreen3, renderTextureShader);
     
     Model* corner1Screen1 = new Model("Models/Spacestation/SM_Env_Consoles_Corner_01_screen_1_xyz_n_rgba_uv.ply");
     corner1Screen1->name = "Corner_Console_1_Screen_1";
-    corner1Screen1->meshes[0]->meshMaterial->material()->diffuseTexture = interiorTexture;
-    corner1Screen1->transform.SetPosition(glm::vec3(-0.6f, 0, 5));
-    GraphicsRender::GetInstance().AddModelAndShader(corner1Screen1, defaultShader);
+    corner1Screen1->meshes[0]->meshMaterial->material()->diffuseTexture = renderTextureCamera3->renderTexture;
+   // corner1Screen1->transform.SetPosition(glm::vec3(-0.6f, 0, 5));
+    corner1Screen1->transform.SetPosition(glm::vec3(-0.6f, -0.60, 0.63));
+    corner1Screen1->transform.SetRotation(glm::vec3(90.00, 0, 0));
+    GraphicsRender::GetInstance().AddModelAndShader(corner1Screen1, renderTextureShader);
 
     Model* corner2Screen1 = new Model("Models/Spacestation/SM_Env_Consoles_Corner_01_screen_1_xyz_n_rgba_uv.ply");
     corner2Screen1->name = "Corner_Console_2_Screen_1";
-    corner2Screen1->meshes[0]->meshMaterial->material()->diffuseTexture = interiorTexture;
+    corner2Screen1->meshes[0]->meshMaterial->material()->diffuseTexture = renderTextureCamera4->renderTexture;
     corner2Screen1->transform.SetPosition(glm::vec3(-10.0f, 0, 5));
-    GraphicsRender::GetInstance().AddModelAndShader(corner2Screen1, defaultShader);
+    GraphicsRender::GetInstance().AddModelAndShader(corner2Screen1, renderTextureShader);
 
 
     Model* corner1Screen2 = new Model("Models/Spacestation/SM_Env_Consoles_Corner_01_screen_2_xyz_n_rgba_uv.ply");
@@ -609,6 +649,16 @@ void ApplicationRenderer::RenderForCamera(Camera* camera, FrameBuffer* framebuff
     defaultShader->setVec3("viewPos", camera->transform.position.x, camera->transform.position.y, camera->transform.position.z);
     defaultShader->setFloat("time", scrollTime);
     defaultShader->setBool("isDepthBuffer", false);
+
+    renderTextureShader->Bind();
+    LightManager::GetInstance().UpdateUniformValuesToShader(renderTextureShader);
+
+    renderTextureShader->setMat4("projection", projection);
+    renderTextureShader->setMat4("view", view);
+    renderTextureShader->setVec3("viewPos", camera->transform.position.x, camera->transform.position.y, camera->transform.position.z);
+    renderTextureShader->setFloat("time", scrollTime);
+    renderTextureShader->setBool("isDepthBuffer", false);
+
 
     alphaBlendShader->Bind();
     LightManager::GetInstance().UpdateUniformValuesToShader(alphaBlendShader);

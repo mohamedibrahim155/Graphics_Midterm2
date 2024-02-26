@@ -441,5 +441,7 @@
     <None Include="Shaders\PostProcessing\FinalOutputShader.frag" />
     <None Include="Shaders\AlphaBlendCombined.frag" />
     <None Include="Shaders\AlphaBlendCombined.vert" />
+    <None Include="Shaders\RenderTexture.frag" />
+    <None Include="Shaders\RenderTexture.vert" />
   </ItemGroup>
 </Project>

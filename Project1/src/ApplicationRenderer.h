@@ -62,7 +62,11 @@ public:
 	FrameBuffer* gameframeBuffer;
 	Camera* sceneViewcamera;
 	Camera* gameScenecamera;
-	Camera* renderTextureCamera;
+	Camera* renderTextureCamera1;
+	Camera* renderTextureCamera2;
+	Camera* renderTextureCamera3;
+	Camera* renderTextureCamera4;
+	Camera* renderTextureCamera5;
 	bool isPlayMode = false;
 
 	glm::mat4 projection;
@@ -82,6 +86,7 @@ private:
 	Shader* alphaBlendShader;
 	Shader* alphaCombinedShader;
 	Shader* alphaCutoutShader;
+	Shader* renderTextureShader;
 
 	Shader* stencilShader;
 	Shader* skyboxShader;

@@ -290,6 +290,8 @@
     <None Include="Shaders\PostProcessing\FinalOutputShader.vert" />
     <None Include="Shaders\PostProcessing\Pixelization.frag" />
     <None Include="Shaders\PostProcessing\Pixelization.vert" />
+    <None Include="Shaders\RenderTexture.frag" />
+    <None Include="Shaders\RenderTexture.vert" />
     <None Include="Shaders\ScrollTexture.frag" />
     <None Include="Shaders\ScrollTexture.vert" />
     <None Include="Shaders\Shader.frag" />
