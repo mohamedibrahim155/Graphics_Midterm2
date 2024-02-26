@@ -242,12 +242,18 @@ void ApplicationRenderer::GameScene()
     std::string diffuseTextureFile = "Models/Spacestation/SpaceInteriors_Texture.png";
 
     std::string UVMapperTextureFile = "Models/Spacestation/uv_mapper.png";
-    std::string fingerprintTextureFile = "Models/Spacestation/fingerprint-001.png";
- //   std::string fingerprintTextureFile = "Models/Spacestation/fingerprint-001.png";
+    std::string fingerprintTextureFile = "Models/Spacestation/Fingerprint_3.png";
+    std::string fingerprint2TextureFile = "Models/Spacestation/Fingerprint_4.png";
+    std::string scratchTextureFile = "Models/Spacestation/Scratch.png";
+
+    std::string scratch2TexxtureFile = "Models/Spacestation/ScratchesGlass.png";
 
     Texture* interiorTexture = new Texture(diffuseTextureFile);
     Texture* UVMapperTexture = new Texture(UVMapperTextureFile);
     Texture* fingerprintTexture = new Texture(fingerprintTextureFile);
+    Texture* fingerprint2Texture = new Texture(fingerprint2TextureFile);
+    Texture* fogTexture = new Texture(scratch2TexxtureFile);
+    Texture* scratchTexture = new Texture(scratchTextureFile);
 
     Model* console1 = new Model("Models/Spacestation/SM_Env_Consoles_01_xyz_n_rgba_uv.ply");
     console1->meshes[0]->meshMaterial->material()->diffuseTexture = interiorTexture;
@@ -281,8 +287,9 @@ void ApplicationRenderer::GameScene()
     Model* consoleScreen2 = new Model("Models/Spacestation/SM_Env_Consoles_01_screen_2_xyz_n_rgba_uv.ply");
     consoleScreen2->name = "Console  Screen 2";
     consoleScreen2->meshes[0]->meshMaterial->material()->alphaTexture = fingerprintTexture;    //UVMAP
+    consoleScreen2->meshes[0]->meshMaterial->material()->combineTexure = fogTexture;    //UVMAP
     consoleScreen2->meshes[0]->meshMaterial->material()->useMaskTexture = true;
-    GraphicsRender::GetInstance().AddModelAndShader(consoleScreen2, alphaBlendShader);
+    GraphicsRender::GetInstance().AddModelAndShader(consoleScreen2, alphaCombinedShader);
 
 
 
@@ -306,18 +313,24 @@ void ApplicationRenderer::GameScene()
 
     Model* corner1Screen2 = new Model("Models/Spacestation/SM_Env_Consoles_Corner_01_screen_2_xyz_n_rgba_uv.ply");
     corner1Screen2->name = "Corner_Console_1_Screen_2";
-    corner1Screen2->meshes[0]->meshMaterial->material()->alphaTexture = fingerprintTexture;  
+    corner1Screen2->meshes[0]->meshMaterial->material()->alphaTexture = fingerprint2Texture;
+    corner1Screen2->meshes[0]->meshMaterial->material()->combineTexure = fogTexture;
     corner1Screen2->meshes[0]->meshMaterial->material()->useMaskTexture = true;  //UVMAP
     corner1Screen2->transform.SetPosition(glm::vec3(-10.0f, 0, 5));
-    GraphicsRender::GetInstance().AddModelAndShader(corner1Screen2, alphaBlendShader);
+    GraphicsRender::GetInstance().AddModelAndShader(corner1Screen2, alphaCombinedShader);
 
     Model* corner2Screen2 = new Model("Models/Spacestation/SM_Env_Consoles_Corner_01_screen_2_xyz_n_rgba_uv.ply");
     corner2Screen2->name = "Corner_Console_2_Screen_2";
+    
+   // corner2Screen2->meshes[0]->meshMaterial->material()->diffuseTexture = scratchTexture; //UVMAP
     corner2Screen2->meshes[0]->meshMaterial->material()->alphaTexture = fingerprintTexture; //UVMAP
+    corner2Screen2->meshes[0]->meshMaterial->material()->combineTexure = scratchTexture; //UVMAP
     corner2Screen2->meshes[0]->meshMaterial->material()->useMaskTexture = true; 
     corner2Screen2->transform.SetPosition(glm::vec3(5.0f, 0, 5));
     corner2Screen2->transform.SetScale(glm::vec3(-1, 1, 1));
     GraphicsRender::GetInstance().AddModelAndShader(corner2Screen2, alphaCombinedShader);
+
+
 
     Model* floor1 = new Model("Models/Spacestation/Ply (converted)/SM_Env_Floor_01_xyz_n_rgba_uv.ply");
     floor1->name = "Floor1";

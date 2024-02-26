@@ -135,9 +135,10 @@ void main()
           //float depth = LinearizeDepth(gl_FragCoord.z) / far;
         //  FragColor = texture(specular_Texture, TextureCoordinates);
        
-    //   vec4 resultFactor =   mix(mixingTexture, result, 1);
+     //  vec4 resultFactor =   mix(mixingTexture, result,0.75f);
+       vec4 resultFactor =   (mixingTexture + result) *0.5f;
 
-          FragColor = result;
+          FragColor = resultFactor;
       }
 
 
