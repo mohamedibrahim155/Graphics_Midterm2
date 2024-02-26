@@ -357,6 +357,8 @@ void ApplicationRenderer::GameScene()
     std::string codeTexurePath3 = "Models/Spacestation/ComputerCode3.jpg";
     std::string codeTexurePath4 = "Models/Spacestation/ComputerCode4.jpg";
 
+    std::string blackTexturePAth = "Textures/DefaultTextures/Default_Specular.jpg";
+
     Texture* sciFiTexture = new Texture(scifiTexturePath);
     Texture* sciFiTexture2 = new Texture(scifi2TexturePath);
     Texture* sciFiTexture3 = new Texture(scifi3TexturePath);
@@ -367,6 +369,8 @@ void ApplicationRenderer::GameScene()
     Texture* codeTexture3 = new Texture(codeTexurePath3);
     Texture* codeTexture4 = new Texture(codeTexurePath4);
 
+
+    blackTexture = new Texture(blackTexturePAth);
 
     RenderQuad* quadWithTexture = new RenderQuad();
     //Model* quadWithTexture = new Model("Models/DefaultQuad/DefaultQuad.fbx");
@@ -421,9 +425,9 @@ void ApplicationRenderer::GameScene()
 
 
 
-    Model* consoleScreen1 = new Model("Models/Spacestation/SM_Env_Consoles_01_screen_1_xyz_n_rgba_uv.ply");
+    consoleScreen1 = new Model("Models/Spacestation/SM_Env_Consoles_01_screen_1_xyz_n_rgba_uv.ply");
     consoleScreen1->name = "Console  Screen 1";
-    consoleScreen1->meshes[0]->meshMaterial->material()->diffuseTexture = monitorRenderTexureCamera->renderTexture;
+    consoleScreen1->meshes[0]->meshMaterial->material()->diffuseTexture = blackTexture;
   //  corner1Screen1->transform.SetPosition(glm::vec3(5, 0, 5));
   //  corner1Screen1->transform.SetScale(glm::vec3(-1, 1, 1));
     GraphicsRender::GetInstance().AddModelAndShader(consoleScreen1, renderTextureShader);
@@ -439,9 +443,9 @@ void ApplicationRenderer::GameScene()
 
 
 
-    Model* consoleScreen3 = new Model("Models/Spacestation/SM_Env_Consoles_01_screen_3_xyz_n_rgba_uv.ply");
+    consoleScreen3 = new Model("Models/Spacestation/SM_Env_Consoles_01_screen_3_xyz_n_rgba_uv.ply");
     consoleScreen3->name = "Console  Screen 3";
-    consoleScreen3->meshes[0]->meshMaterial->material()->diffuseTexture = monitorRenderTexureCamera2->renderTexture;
+    consoleScreen3->meshes[0]->meshMaterial->material()->diffuseTexture = blackTexture;
     GraphicsRender::GetInstance().AddModelAndShader(consoleScreen3, renderTextureShader);
     
 
@@ -905,6 +909,17 @@ void ApplicationRenderer::ProcessInput(GLFWwindow* window)
          }
 
          if (!isPlayMode) return;
+
+         if (key == GLFW_KEY_2 && action == GLFW_PRESS  )
+         {
+             isKeyPressed = !isKeyPressed;
+
+             consoleScreen1->meshes[0]->meshMaterial->material()->diffuseTexture =
+                 isKeyPressed ? monitorRenderTexureCamera->renderTexture : blackTexture;
+
+             consoleScreen3->meshes[0]->meshMaterial->material()->diffuseTexture = 
+                 isKeyPressed ? monitorRenderTexureCamera2->renderTexture : blackTexture;
+         }
 
          if (action == GLFW_PRESS)
          {

@@ -114,5 +114,11 @@ private:
 	 bool firstMouse;
 	 bool isImguiPanelsEnable = false;
 
+	 Model* consoleScreen3;
+	 Model* consoleScreen1;
+
+	 BaseTexture* blackTexture;
+	 bool isKeyPressed = false;
+
 };
 
