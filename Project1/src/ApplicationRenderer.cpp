@@ -342,8 +342,6 @@ void ApplicationRenderer::GameScene()
 
     ComputerScreen* corner1Screen1 = new ComputerScreen(0);
     corner1Screen1->name = "Corner_Console_1_Screen_1";
-    corner1Screen1->SetTexture(renderTextureCamera1->renderTexture);
-
     corner1Screen1->SetRenderTextures({ renderTextureCamera1->renderTexture ,renderTextureCamera2->renderTexture,
         renderTextureCamera3->renderTexture,renderTextureCamera4->renderTexture,renderTextureCamera5->renderTexture });
 
@@ -353,7 +351,6 @@ void ApplicationRenderer::GameScene()
 
     ComputerScreen* corner2Screen1 = new ComputerScreen(0);
     corner2Screen1->name = "Corner_Console_2_Screen_1";
-    corner2Screen1->SetTexture(renderTextureCamera1->renderTexture);
 
     corner2Screen1->SetRenderTextures({ renderTextureCamera1->renderTexture ,renderTextureCamera2->renderTexture,
     renderTextureCamera3->renderTexture,renderTextureCamera4->renderTexture,renderTextureCamera5->renderTexture });

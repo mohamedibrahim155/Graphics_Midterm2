@@ -1,6 +1,7 @@
 #include "ComputerScreen.h"
 #include"../GraphicsRender.h"
 
+
 using namespace MathUtils;
 
 ComputerScreen::ComputerScreen()
@@ -12,7 +13,12 @@ ComputerScreen::ComputerScreen(int index)
 
 	LoadModel("Models/Spacestation/" + modelPath[index]);
 
+
+	blackTexure  =  new Texture(blackTexurePath);
+
 	GraphicsRender::GetInstance().AddModelAndShader(this, GraphicsRender::GetInstance().renderTextureShader);
+	SetTexture(blackTexure);
+	InputManager::GetInstance().AddObserver(this);
 }
 
 void ComputerScreen::DrawProperties()
@@ -55,8 +61,16 @@ void ComputerScreen::SetRenderTextures(const std::vector<BaseTexture*>& textures
 void ComputerScreen::OnTextureChange()
 {
 	int random = Math::GetRandomIntNumber(0, listOfCameraRenderTexure.size() - 1);
+	interval = Math::GetRandomIntNumber(2, 7);
+	if (keyPressed)
+	{
+		SetTexture(listOfCameraRenderTexure[random]);
 
-	SetTexture(listOfCameraRenderTexure[random]);
+	}
+	else
+	{
+		SetTexture(blackTexure);
+	}
 }
 
 void ComputerScreen::RunTimer(float deltaTime)
@@ -70,5 +84,22 @@ void ComputerScreen::RunTimer(float deltaTime)
 	{
 		timer += deltaTime;
 	}
+}
+
+void ComputerScreen::OnKeyPressed(const int& key)
+{
+	if (key == GLFW_KEY_2)
+	{
+		keyPressed = !keyPressed;
+		OnTextureChange();
+	}
+}
+
+void ComputerScreen::OnKeyReleased(const int& key)
+{
+}
+
+void ComputerScreen::OnKeyHold(const int& key)
+{
 }
 

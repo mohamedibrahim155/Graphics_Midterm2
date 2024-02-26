@@ -1,8 +1,8 @@
 #pragma once
 #include"../model.h"
 #include "../Math.h"
-
-class ComputerScreen : public Model
+#include "../InputManager/InputManager.h"
+class ComputerScreen : public Model, public iInputObserver
 {
 public:
     ComputerScreen();
@@ -24,13 +24,26 @@ public:
 private:
     int index = 0;
    
+    std::string blackTexurePath = "../../Textures/DefaultTextures/Default_Specular.jpg";
     std::vector<std::string> modelPath = { "SM_Env_Consoles_01_screen_1_xyz_n_rgba_uv.ply",
         "SM_Env_Consoles_Corner_01_screen_1_xyz_n_rgba_uv" };
 
     std::vector<BaseTexture*> listOfCameraRenderTexure;
 
+    BaseTexture* blackTexure;
+
     float interval = 2;
     float timer = 0;
-    
+    bool keyPressed = false;
+
+    // Inherited via iInputObserver
+    void OnKeyPressed(const int& key) override;
+
+    void OnKeyReleased(const int& key) override;
+
+    void OnKeyHold(const int& key) override;
+
+
+
 };
 
